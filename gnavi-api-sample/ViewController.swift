@@ -58,6 +58,8 @@ class ViewController: UIViewController, UISearchBarDelegate, UITableViewDataSour
     let url = "https://api.gnavi.co.jp/RestSearchAPI/20150630/?keyid=f08264bfb0a673f6b2fa1c77e1af3ee2&format=json&latitude=\(latitude_encode!)&longitude=\(longtude_encode!)"
 
     let requestURL = Foundation.URL(string: url)
+    // print(requestURL!)
+    
     // request用のオブジェクト生成
     let req = URLRequest(url: requestURL!)
     let configuration = URLSessionConfiguration.default
@@ -89,6 +91,7 @@ class ViewController: UIViewController, UISearchBarDelegate, UITableViewDataSour
               // print("image_urlなし")
               let rest = (name, url, "")
               self.restaurantList.append(rest)
+              continue
             }
           }
         }
@@ -107,7 +110,6 @@ class ViewController: UIViewController, UISearchBarDelegate, UITableViewDataSour
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "researchCell", for: indexPath)
     cell.textLabel?.text = restaurantList[indexPath.row].name
-    //let url = URL(string: restaurantList[indexPath.row].image)
     if let url = URL(string: restaurantList[indexPath.row].image) {
       if let image_data = try? Data(contentsOf: url) {
         cell.imageView?.image = UIImage(data: image_data)
@@ -115,7 +117,6 @@ class ViewController: UIViewController, UISearchBarDelegate, UITableViewDataSour
     } else {
       cell.imageView?.image = UIImage(named: "noimage.png")
     }
-    
     return cell
   }
   
